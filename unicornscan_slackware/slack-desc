@@ -1,0 +1,8 @@
+unicornscan: unicornscan (flexible and efficient network probing)
+unicornscan: 
+unicornscan: Unicornscan is an attempt at a user-land distributed TCP/IP
+unicornscan: stack. It is intended to provide a researcher a superior
+unicornscan: interface for introducing a stimulus into and measuring a
+unicornscan: response from a TCP/IP enabled device or network.
+unicornscan: http://unicornscan.org
+unicornscan: 

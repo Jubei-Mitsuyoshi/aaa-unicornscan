@@ -1,0 +1,10 @@
+#ifndef VERSION
+
+#define VERSION "#VERSION#"
+#define MODULE_IVER 0x0102 /* 1.01 */
+
+#define MOD_VERSION(version, maj, min) \
+	maj=((version & 0xFF00) >> 8); \
+	min=(version & 0x00FF)
+
+#endif

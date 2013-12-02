@@ -1,0 +1,11 @@
+--- libnet/Makefile.in.orig	2004-08-08 02:14:51.000000000 -0700
++++ libnet/Makefile.in	2004-08-08 02:14:57.000000000 -0700
+@@ -109,7 +109,7 @@
+ 
+ DISTCLEANFILES = *~
+ 
+-SUBDIRS = include src sample
++SUBDIRS = include src
+ 
+ EXTRA_DIST = Makefile.am.common
+ 

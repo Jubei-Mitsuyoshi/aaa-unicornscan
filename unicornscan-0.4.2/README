@@ -1,0 +1,22 @@
+THIS IS A PRE-RELEASE CODE BASE
+
+if you read nothing else, read CURRENT_STATUS_OF_THIS_RELEASE
+
+BEFORE YOU TYPE MAKE,
+there is no configure script, there will likely be one in the future, for now
+1) edit src/config.h
+dont worry, its documented, read down to the part where it says you can likely stop
+2) edit src/Makefile.inc
+same thing, just read the comments, it even has examples for different systems
+3) type make
+4) type make install
+
+If you see:
++ chcon --help
+make: *** [install] Error 127
+
+and you don't have SE Linux, you can safely ignore that message.
+
+have fun, be good, and please talk to us.
+#unicornscan on efnet.
+unicornscan@dyadsecurity.com

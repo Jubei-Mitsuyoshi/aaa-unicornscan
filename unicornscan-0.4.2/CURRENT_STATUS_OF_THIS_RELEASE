@@ -1,0 +1,78 @@
+please read this. I didnt copy/paste this, so you should not treat it as such.
+
+First off an explanation of the version number (in my mind anyhow):
+	if you see 0.5.1:
+		this means that the code is about half ready for a version 1 production release.
+		this would also indicate that this 50% release has some important fixes from 0.5.0 (the first stab at a 50% release)
+	if you see 1.7.9:
+		this means that you have release code thats working on becoming version 2, and its about 70% there, apparently
+		the author has tried 9 times to deliver this release, and failed each time. If you want stability there is likey
+		a 1.0.103 release or some such, because you have the `7' that means this is also a development release, and if you
+		can't find a 1.0.? release, you should yell and scream at someone, seeing as how that is really what is recommended you use
+		unless you are a programmer or just like to live on the edge (and have a copy you can _really_ use for things that
+		can't fall over dead when you need accurate information)
+
+	SPECIAL NOTE:
+		if you have a development release, be carefull, there could be `security issues' with it. no joke, i make mistakes often,
+		sometimes i even know about them, but those sorts of things will hopefully be gone in 1.0.? and 2.0.? releases. If you have
+		a special version from us, then it is likely to be a safe thing too (if we told you it would be `ok'). we audit the code
+		at release cycles, not before and not after them. if you truely want security, please use selinux, BUT YOU MUST REVIEW
+		the policy and your system configuration as it applies to YOU. We will try and support other security features, as we have
+		time, such as Trusted Solaris, or Trusted BSD. Please talk to us about this, as we are already working on Trusted Solaris
+		and would LOVE to hear what you think.
+
+the information below this point contains information about the code YOU HAVE:
+
+what works (hopefully well):
+	tcp syn scanning (however if you are using solaris libnet doesnt work, so wait till when we fix that)
+	udp `payload' scanning
+		Note: the payloads are now in the configuration file, and im having troubles with some checksums, so if you sniff
+		the packets, and notice something fishy thats why. it should still work for gathering active applications if you
+		put correct payloads in the configuration files, however some really picky applications may not like what i did to
+		fix the checksum issue (i cant say i blame them). if you need reliable udp payloads, then use an even length payload.
+		this issue is pretty high priority, so you shouldnt have to wait long.
+	os `spoofing' (via tcp syn scanning)
+		the most obvious pain (tm) is that the os signatures are hardcoded into the `init_packet.c' file. ugly. oh well it works
+		if you wait this will change.
+
+what works for us:
+	arp scanning (this will vary from platform to platform, perhaps plan9 doesnt like the way im doing something {not to say that plan9 is currently a supported `scanning' platform, think from the context of network devices}, i have no idea)
+
+what kinda works and you should expect to rapidly improve as POC code gets replaced with real code:
+	tcp `connection' code:
+		there is alot to say here. for us (on linux) it works almost in a usable form HOWEVER it fails sometimes to connect
+		because there is code missing, and the api and code is not well thought out. This has already been fixed to some degree,
+		however it is not in this code. If this is the feature you _need_ than it might work, but you are likely better off waiting.
+	clustering mode:
+		it works for us, neener neener. but we have real code, you dont. sorry about that. really though, the cluser code was
+		written for an older release, and the hooks have been maintained, but most of the logic removed as we try and make it more
+		generic and pretty. this will also change in the near future, and is just as important as tcp connection stuff.
+		If you have questions about what exactly a `drone' is, then ask, but dont expect it to work for you yet without modifications.
+	scheduler:
+		oh wow, its getting late, and i STILL dont have this in the code. welp, if its missing, thats cause i spent all my time
+		telling you whats here or not.
+
+	The doCumenTaion:
+		what can we say here. it sucks. the API for modules also is messy. obviously we have to fix that before we can write documentation
+		about it, otherwise we would be wasting my time (for example). if you feel like helping here, request to be able to do things.
+		we dont document it unless we are happy with it (and then it still takes a bit, the 1.0.? release should have proper documentation
+		and if it doesnt please complain to us about it, regardless of how silly or trivial it is)
+
+what doesnt work causes:
+1) its been removed to be reimplemented cause it was ugly
+2) we dont care about it
+3) we want to care about it and are waiting for the correct time.
+4) we just pretend to care about it, and say we are working on it so we look good, but really it may not ever be done (unless something changes)
+5) we are really working on it, but havent finished it.
+	tcp `payload' stuff:
+		this is a fairly high priority, its likely that the scanner will get a socket API to implement this, that way you can reuse all the userland programs you have that know protocols (think inetd backwards)
+	real covertness:
+		think uptimes, think tcp connection fingerprints. these things need to be alot better than they are, if you want to look normal.
+	the TODO list that is in this tarball:
+		its really old. read it if you like to read things. from time to time we remove things, but its not current anymore.
+
+what is due to be fixed cause we think it sucks:
+	the configuration parser:
+		its a small wonder it works, and it getting replaced with a real implementation.
+	the database interface:
+		no comment. it does work however (with the database type we like and if you read things)

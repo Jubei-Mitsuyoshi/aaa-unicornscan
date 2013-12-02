@@ -1,0 +1,13 @@
+#DESC unicornscan - Network scanning
+#
+# Authors:  Jack <jack@dyadsecurity.com>
+
+#
+# Rules for the unicornscan_t domain.
+#
+type unicornscan_exec_t, file_type, sysadmfile, exec_type;
+type unisend_exec_t, file_type, sysadmfile, exec_type;
+type unilisten_exec_t, file_type, sysadmfile, exec_type;
+
+type unicornscan_tmp_t, file_type, sysadmfile;
+type unicornscan_share_t, file_type, sysadmfile;

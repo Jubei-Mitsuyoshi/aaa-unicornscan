@@ -1,0 +1,155 @@
+.TH UNICORNSCAN "1" "sometime within 2004" PRE-RELEASE PRE-RELEASE
+.SH NAME
+unicornscan \- Enhanced network scanner
+.SH SYNOPSIS
+.B unicornscan
+[\fIOPTIONS\fR] [\fIHOSTLIST\fR]
+.SH DESCRIPTION
+.PP
+unicornscan (
+.I http://www.dyadsecurity.com/unicornscan/\fR ) is a modular flexable network scanner, it reads configuration files to get options and udp payloads, command line arguments may be used to override the options found in the configuration files. The configuration files will be located in the PREFIX (default /usr/local) share/unicornscan directory.
+.PP
+Host List syntax is one of `host.domain.tld' or dot quad `X.X.X.X' with an optional CIDR mask prefixed by a forward slash, and a port list following prefixed with a colon. The following hostlists are valid examples:
+.br
+.B host.domain.tld/24:q\fR
+.br
+.B 10.0.0.1:1-40\fR
+.br
+.B 192.168.2.3/30:1,2,3,4,50-60\fR
+.SH OPTIONS
+.TP
+.B -b, --broken-crc OPTION\fR
+.PP
+Set broken crc sums on [T]ransport layer, [N]etwork layer, or both[TN].
+.TP
+.B -B, --source-port OPTION\fR
+.PP
+Set scan source port using numeric option.
+.TP
+.B -D, --no-defpayload\fR
+.PP
+No default payload, only probe ports we have payloads for (currently udp only).
+.TP
+.B -e, --enable-output OPTION\fR
+.PP
+Enable output modules listed as arguments.
+.TP
+.B -h, --help\fR
+.PP
+Display command line help.
+.TP
+.B -i, --interface OPTION\fR
+.PP
+Use the network interface specified in OPTION.
+.TP
+.B -E, --show-errors\fR
+.PP
+Track icmp errors and tcp non-open replies.
+.TP
+.B -m, --mode OPTION\fR
+.PP
+Use OPTION scan mode, tcp syn scan is default, U for udp T for tcpsyn.
+for -mT you can also specify tcp flags following the T like -mTsFpU for example.
+`-mTsFpU' would send tcp syn packets with NO Syn,FIN,NO Push,URG bits inside the tcp header.
+(see 
+.I http://www.iana.org/assignments/tcp-header-flags\fR for more info)
+.TP
+.B -M, --module-dir OPTION\fR
+.PP
+Directory modules are found at.
+.TP
+.B -p, --no-patience\fR
+.PP
+Display things as we find them.
+.TP
+.B -P, --pcap-filter\fR
+.PP
+Extra pcap filter string for listener (like not port 162 perhaps)
+.TP
+.B -r, --pps OPTION\fR
+.PP
+Scan at base10 numeric OPTION packets per second. This value is total, not per host, and is highly connection dependent (on both ends).
+.TP
+.B -R, --repeats OPTION\fR
+.PP
+Repeat packet scan base10 numeric OPTION times.
+.TP
+.B -s, --source-addr OPTION\fR
+.PP
+Source address to send packets from (dot quad notation), `r' for random.
+.TP
+.B -S, --no-shuffle\fR
+.PP
+DO NOT shuffle port list before sending.
+.TP
+.B -t, --ip-ttl OPTION\fR
+.PP
+Set IP TTL on packets to base10 numeric OPTION.
+.TP
+.B -T, --ip-tos OPTION\fR
+.PP
+Set IP TOS on packets to base10 numeric OPTION.
+.TP
+.B -w, --safefile OPTION\fR
+.PP
+Write pcap file of recieved packets to OPTION file. Note that `%d' is escaped into a numeric unix timestamp, to use a `%' character
+in a filename, use `%%'.
+.TP
+.B -W, --fingerprint\fR
+.PP
+Emulate OS fingerprint 0=cisco (default) 1=openbsd 2=WindowsXP for packets sent.
+.TP
+.B -v, --verbose\fR
+.PP
+Verbose operation, each time more verbose (for -v), so -vvvvv is really verbose, and --verbose can take a base10 numeric value as well.
+.TP
+.B -V, --version\fR
+.PP
+Display version information.
+.SH EXAMPLES
+.TP
+.B "unicornscan www.domain.tld/24:161,53,123 -mU -r 400"\fR
+.PP
+Scan the 256 hosts inside the network that www.domain.tld resides for snmp, dns, and ntp
+in udp scanning mode with a rate of 400 packets per second
+.TP
+.B "unicornscan 192.168.1.233:q"\fR
+.PP
+TCP syn scan host 192.168.1.233 (/32 is implied) for "Quick" Ports
+.TP
+.B "unicornscan -B53 -mTEC -R2 -W2 -t5 www.domain.tld/16:22"\fR
+.PP
+TCP syn scan the class B network www.domain.tld resides in with TCP packets coming from source port 53
+with the tcp header flags SYN, ECE (ECN echo), and CWR (ECN Congestion Window Reduced). Initial
+time to live on sent ip packet should be set to `5' hops.
+.TP
+.B "unicornscan -B22 -sr -mTsR -r 5000 -R 10000 10.0.0.24:31425"\fR
+.PP
+Send to the host 10.0.0.24 destination port 31425 TCP packets coming from random ipv4 addresses at 5,000 packets per second for a total packet count of 10,000 packets, note that the TCP sequence numbers will not be random per packet, but rather "random" per session.
+.SH BUGS
+.B THIS IS PRE-RELEASE SOFTWARE, EXPECT PROBLEMS, DO NOT:\fR
+.PP
+A) Use for production without monitoring correct operation
+.br
+B) Use in security "sensitive" environment
+.br
+C) Please report bugs to unicornscan@dyadsecurity.com
+.br
+unicornscan also includes three other utilities called "fantaip (ip arp'er)", "unisniff (loopback ipc message debugger)", and "uniconfigtest (configuration file checker)", However these tools remain undocumented. Some flags may not be fully implemented, or removed from this release, not even the configuration file syntax is documented.
+.SH AUTHORS
+jack@dyadsecurity.com, josh@dyadsecurity.com, robert@dyadsecurity.com, gh0st@rapturesecurity.org
+.SH WARNINGS AND DISCLAIMERS
+.PP
+This program is distributed in the hope that it will be useful, but
+.B WITHOUT ANY WARRANTY\fR;
+without even the implied warranty of
+.B MERCHANTABILITY\fR
+or
+.B FITNESS FOR A PARTICULAR PURPOSE\fR.
+See the GNU
+General Public License for more details. We hope you will be responsible with this software, please
+respect others. Unicornscan is intended to be used with permission, please be aware of local laws
+restricting its use.
+.SH SEE ALSO
+.BR tcpdump(1)
+for pcap filter expression help

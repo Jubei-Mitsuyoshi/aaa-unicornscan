@@ -1,0 +1,3 @@
+please edit src/output_modules/database/logininfo.h and correct the database information.
+the sql file you need to run on your database is src/output_modules/database/pgsql_schema.sql
+This situation will change before release to include better support for database options.

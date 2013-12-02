@@ -1,0 +1,3 @@
+# unicornscan
+/usr/local/bin/unicornscan	--	system_u:object_r:unicornscan_exec_t
+/usr/local/bin/fantaip		--	system_u:object_r:netutils_exec_t

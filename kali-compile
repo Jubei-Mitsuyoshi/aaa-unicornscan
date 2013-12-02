@@ -1,0 +1,8 @@
+wget -N http://unicornscan.org/releases/unicornscan-0.4.7-2.tar.bz2 
+				bzip2 -cd unicornscan-0.4.7-2.tar.bz2 | tar xf - 
+				cd unicornscan-0.4.7/ 
+				./configure CFLAGS=-D_GNU_SOURCE && make && make install
+				cd /root/ &>/dev/null
+				rm -rf unicornscan-0.4.7*
+				echo -e "\033[32m====== All Done ======\033[m"
+				echo "Launch a new terminal and enter unicornscan to ru
